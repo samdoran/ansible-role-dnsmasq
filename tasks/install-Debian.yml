@@ -1,6 +1,16 @@
-- name: DEBAIN | Install dnsmasq
+- name: DEBIAN | Install dnsmasq
   apt:
     name: dnsmasq
     state: latest
     cache_valid_time: 600
     update_cache: true
+
+- name: UBUNTU | Stop and disable systmed-resolve
+  systemd:
+    name: systemd-resolved
+    state: stopped
+    enabled: false
+    daemon_reload: true
+  when:
+    - ansible_facts.distribution == 'Ubuntu'
+    - ansible_facts.distribution_major_version is version_compare('18', '>=')
