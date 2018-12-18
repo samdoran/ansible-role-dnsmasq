@@ -27,11 +27,12 @@ NEEDS_QUOTE = (
     'dhcp-ignore',
     'dhcp-option',
     'dhcp-option-force',
-    'ptr-record',
-    'srv-host',
-    'txt-record',
     'dhcp-userclass',
     'dhcp-vendorclass',
+    'ptr-record',
+    'pxe-prompt',
+    'srv-host',
+    'txt-record',
     )
 
 DEFAULTS = {
