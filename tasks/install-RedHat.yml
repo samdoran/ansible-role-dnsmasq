@@ -1,0 +1,4 @@
+- name: RHEL | Install dnsmasq
+  yum:
+    name: dnsmasq
+    state: latest

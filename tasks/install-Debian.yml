@@ -1,0 +1,6 @@
+- name: DEBAIN | Install dnsmasq
+  apt:
+    name: dnsmasq
+    state: latest
+    cache_valid_time: 600
+    update_cache: true

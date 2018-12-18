@@ -1,0 +1,21 @@
+- name: Include distribution specific variables
+  include_vars: "{{ item }}"
+  with_first_found:
+    - "{{ ansible_facts.os_family }}-{{ ansible_facts.distribution_major_version }}.yml"
+    - "{{ ansible_facts.distribution }}-{{ ansible_facts.distribution_version }}.yml"
+    - "{{ ansible_facts.os_family }}.yml"
+    - "{{ ansible_facts.os_distribution }}.yml"
+    - defaults/main.yml
+
+- include: "install-{{ ansible_facts.os_family }}.yml"
+
+- name: SystemD daemon reload
+  systemd:
+    daemon_reload: true
+  when: ansible_facts['service_mgr'] == 'systemd'
+
+- name: Start and enable dnsmasq
+  service:
+    name: dnsmasq
+    state: started
+    enabled: true
