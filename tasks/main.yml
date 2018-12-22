@@ -6,16 +6,24 @@
     - "{{ ansible_facts.os_family }}.yml"
     - "{{ ansible_facts.os_distribution }}.yml"
     - defaults/main.yml
+  tags:
+    - dnsmasq
 
 - include: "install-{{ ansible_facts.os_family }}.yml"
+  tags:
+    - dnsmasq
 
 - name: SystemD daemon reload
   systemd:
     daemon_reload: true
-  when: ansible_facts['service_mgr'] == 'systemd'
+  when: ansible_facts.service_mgr == 'systemd'
+  tags:
+    - dnsmasq
 
 - name: Start and enable dnsmasq
   service:
     name: dnsmasq
     state: started
     enabled: true
+  tags:
+    - dnsmasq

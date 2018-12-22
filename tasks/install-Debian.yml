@@ -4,6 +4,28 @@
     state: latest
     cache_valid_time: 600
     update_cache: true
+  tags:
+    - dnsmasq
+
+# https://serverfault.com/questions/907500/how-to-debug-dnsmasq-requiring-a-service-restart-in-order-to-work
+- name: DEBIAN | Change service target to avoid race condition on Pi
+  ini_file:
+    path: /lib/systemd/system/dnsmasq.service
+    section: Unit
+    option: "{{ item.option }}"
+    value: "{{ item.value }}"
+    no_extra_spaces: true
+  when:
+    - ansible_facts.service_mgr == 'systemd'
+    - "'arm' in ansible_facts.architecture"
+  notify: restart dnsmasq
+  loop:
+    - option: After
+      value: network-online.target
+    - option: Wants
+      value: network-online.target
+  tags:
+    - dnsmasq
 
 - name: UBUNTU | Stop and disable systmed-resolve
   systemd:
@@ -14,3 +36,5 @@
   when:
     - ansible_facts.distribution == 'Ubuntu'
     - ansible_facts.distribution_major_version is version_compare('18', '>=')
+  tags:
+    - dnsmasq
