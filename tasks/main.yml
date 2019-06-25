@@ -1,11 +1,12 @@
 - name: Include distribution specific variables
-  include_vars: "{{ item }}"
-  with_first_found:
-    - "{{ ansible_facts.os_family }}-{{ ansible_facts.distribution_major_version }}.yml"
-    - "{{ ansible_facts.distribution }}-{{ ansible_facts.distribution_version }}.yml"
-    - "{{ ansible_facts.os_family }}.yml"
-    - "{{ ansible_facts.os_distribution }}.yml"
-    - defaults/main.yml
+  include_vars: "{{ lookup('first_found', files) }}"
+  vars:
+    files:
+      - "{{ ansible_facts.os_family }}-{{ ansible_facts.distribution_major_version }}.yml"
+      - "{{ ansible_facts.distribution }}-{{ ansible_facts.distribution_version }}.yml"
+      - "{{ ansible_facts.os_family }}.yml"
+      - "{{ ansible_facts.distribution }}.yml"
+      - defaults/main.yml
   tags:
     - dnsmasq
 
@@ -25,5 +26,6 @@
     name: dnsmasq
     state: started
     enabled: true
+  register: service_start
   tags:
     - dnsmasq

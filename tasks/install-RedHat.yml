@@ -2,3 +2,5 @@
   yum:
     name: dnsmasq
     state: latest
+  tags:
+    - dnsmasq

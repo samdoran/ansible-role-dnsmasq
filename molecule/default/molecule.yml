@@ -12,15 +12,20 @@ platforms:
     command: ${MOLECULE_COMMAND:-""}
     volumes:
       - /sys/fs/cgroup:/sys/fs/cgroup:ro
-    privileged: true
-    pre_build_image: true
+    privileged: yes
+    pre_build_image: yes
 provisioner:
   name: ansible
+  config_options:
+    defaults:
+      stdout_callback: debug
   lint:
     name: ansible-lint
     options:
       x:
-        - ANSIBLE0010
+        - 204  # Lines should be no longer than 160 chars
+        - 403  # Package installs should not use latest
+        - 502  # All tasks should be named
   playbooks:
     converge: ${MOLECULE_PLAYBOOK:-playbook.yml}
 scenario:
