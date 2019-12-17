@@ -33,7 +33,7 @@ NEEDS_QUOTE = (
     'pxe-prompt',
     'srv-host',
     'txt-record',
-    )
+)
 
 DEFAULTS = {
     'user': 'dnszasq',
