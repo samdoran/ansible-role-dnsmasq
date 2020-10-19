@@ -8,20 +8,17 @@ env:
   matrix:
     - MOLECULE_DISTRIBUTION: centos6
     - MOLECULE_DISTRIBUTION: centos7
-    # - MOLECULE_DISTRIBUTION: rhel6
-    # - MOLECULE_DISTRIBUTION: rhel7
-    # - MOLECULE_DISTRIBUTION: ubuntu14
+    - MOLECULE_DISTRIBUTION: centos8
     - MOLECULE_DISTRIBUTION: ubuntu16
     - MOLECULE_DISTRIBUTION: ubuntu18
+    - MOLECULE_DISTRIBUTION: ubuntu20
     - MOLECULE_DISTRIBUTION: debian8
       ANSIBLE_PYTHON_INTERPRETER: /usr/bin/python
     - MOLECULE_DISTRIBUTION: debian9
-    # - MOLECULE_DISTRIBUTION: fedora27
-    # - MOLECULE_DISTRIBUTION: fedora28
-    # - MOLECULE_DISTRIBUTION: fedora29
+    - MOLECULE_DISTRIBUTION: debian10
 
 install:
-  - pip install molecule[lint]==3.0.6 docker
+  - pip install ansible ansible-lint docker molecule==3.0.8 yamllint
 
 before_script:
   # Remove "ansible-role-" prefix from role name
