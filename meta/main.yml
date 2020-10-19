@@ -11,21 +11,19 @@ galaxy_info:
       versions:
         - 6
         - 7
+        - 8
 
     - name: Debian
       versions:
         - jessie
         - stretch
+        - buster
 
     - name: Ubuntu
       versions:
-        - trusty
         - xenial
-
-    - name: Debian
-      versions:
-        - stretch
-        - jessie
+        - bionic
+        - focal
 
   galaxy_tags:
     - system
