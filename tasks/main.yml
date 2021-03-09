@@ -14,7 +14,7 @@
   tags:
     - dnsmasq
 
-- name: SystemD daemon reload
+- name: systemd daemon reload
   systemd:
     daemon_reload: true
   when: ansible_facts.service_mgr == 'systemd'
