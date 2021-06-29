@@ -1,7 +1,6 @@
 Dnsmasq
 =========
 [![Galaxy](https://img.shields.io/badge/galaxy-samdoran.dnsmasq-blue.svg?style=flat)](https://galaxy.ansible.com/samdoran/dnsmasq)
-[![Build Status](https://travis-ci.org/samdoran/dnsmasq.svg?branch=master)](https://travis-ci.org/samdoran/ansible-role-dnsmasq)
 
 Install and manage [dnsmasq](http://www.thekelleys.org.uk/dnsmasq/doc.html)
 
