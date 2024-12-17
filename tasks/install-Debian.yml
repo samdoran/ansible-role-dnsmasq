@@ -17,7 +17,7 @@
     mode: '0644'
   when:
     - ansible_facts.service_mgr == 'systemd'
-    - "'arm' in ansible_facts.architecture"
+    - ansible_facts.architecture in ['arm', 'aarch64']
   notify: restart dnsmasq
   loop:
     - option: After
@@ -27,14 +27,39 @@
   tags:
     - dnsmasq
 
-- name: UBUNTU | Stop and disable systmed-resolve
+- name: DEBIAN | Stop and disable systmed-resolve
   systemd:
     name: systemd-resolved
     state: stopped
     enabled: false
     daemon_reload: yes
-  when:
-    - ansible_facts.distribution == 'Ubuntu'
-    - ansible_facts.distribution_major_version is version_compare('18', '>=')
+  when: >
+    ansible_facts.distribution == 'Ubuntu' and ansible_facts.distribution_major_version is version('18', '>=')
+    or ansible_facts.distribution == 'Debian' and ansible_facts.distribution_major_version is version('12', '>=')
+  tags:
+    - dnsmasq
+
+- name: DEBIAN | Check /etc/resolv.conf
+  stat:
+    path: /etc/resolv.conf
+  register: resolv_conf
+  tags:
+    - dnsmasq
+
+- name: DEBIAN | Remove /etc/resolv.conf
+  file:
+    path: /etc/resolv.conf
+    state: absent
+  when: resolv_conf.stat.islnk | bool
+  tags:
+    - dnsmasq
+
+- name: DEBIAN | Copy /etc/resolv.conf
+  template:
+    src: resolv.conf.j2
+    dest: /etc/resolv.conf
+    owner: root
+    group: root
+    mode: '0644'
   tags:
     - dnsmasq
