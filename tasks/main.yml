@@ -6,7 +6,7 @@
       - "{{ ansible_facts.distribution }}-{{ ansible_facts.distribution_version }}.yml"
       - "{{ ansible_facts.os_family }}.yml"
       - "{{ ansible_facts.distribution }}.yml"
-      - defaults/main.yml
+      - vars/main.yml
   tags:
     - dnsmasq
 

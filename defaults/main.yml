@@ -1,1 +1,3 @@
-
+dnsmasq_dns_servers:
+  - 1.1.1.1
+  - 1.1.1.3
